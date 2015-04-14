@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="shudu_background">#11008899</color>
+    <color name="shudu_light1">#ffffffff</color>
+    <color name="shudu_light">#22aabbcc</color>
+    <color name="shudu_dark">#aa111213</color>
+</resources>
