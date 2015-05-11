@@ -12,7 +12,8 @@ import android.view.View;
 public class XgDialog extends Dialog {
     private final View vKeys[] = new View[9];
     public String str[] = new String[9];
-    public int guanshu = -1;
+    public static final int GUANSHU_BEFORE_CHOICE=-1;
+    public int guanshu =GUANSHU_BEFORE_CHOICE;
     private ShuduView shuduView;
 
     //构造函数，第二个参数中保存着当前单元格已经使用过的数据

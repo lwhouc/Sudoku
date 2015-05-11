@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -37,11 +38,13 @@ public class ShuduView extends View {
 
     private String str[] = new String[9];
     private String string = "str";
-    private int guanshu = xgDialog.guanshu;
 
     //构造函数
-    public ShuduView(Context context) {
-        super(context);
+    public ShuduView(Context context,AttributeSet attrs) {
+        super(context, attrs);
+        if (isInEditMode()){
+            return;
+        }
         xgDialog.show();
     }
 
@@ -74,6 +77,9 @@ public class ShuduView extends View {
             }
         }
 
+        if (isInEditMode()){
+            return;
+        }
         //绘制数字
         Paint numberPaint = new Paint();
         numberPaint.setColor(Color.BLACK);
@@ -90,7 +96,7 @@ public class ShuduView extends View {
                 numberPaint.setColor(Color.GREEN);
                 canvas.drawText(game.getTileString(i, j), i * width + x, j * height + y, numberPaint);
                 Log.e("asdf", "drawtext" + i + j);
-                if (xgDialog.guanshu != -1) {
+                if (xgDialog.guanshu != xgDialog.GUANSHU_BEFORE_CHOICE) {
                     numberPaint.setColor(Color.BLACK);
                     canvas.drawText(originalStr[i][j], i * width + x, j * height + y, numberPaint);
                 }
@@ -180,18 +186,18 @@ public class ShuduView extends View {
                 alertDialog.setNegativeButton("重玩", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        xuanguan(xgDialog.str[guanshu]);
+                        xuanguan(xgDialog.str[xgDialog.guanshu]);
                     }
                 });
                 alertDialog.setPositiveButton("下一关", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (guanshu > 8) {
-                            guanshu = 0;
+                        if (xgDialog.guanshu > 8) {
+                            xgDialog.guanshu = 0;
                         } else {
-                            guanshu = guanshu + 1;
+                            xgDialog.guanshu = xgDialog.guanshu + 1;
                         }
-                        xuanguan(xgDialog.str[guanshu]);
+                        xuanguan(xgDialog.str[xgDialog.guanshu]);
                     }
                 });
                 alertDialog.show();
@@ -212,11 +218,6 @@ public class ShuduView extends View {
         }
 
         invalidate();
-    }
-
-    //保存游戏进度
-    public void saveGame(){
-  //      FileOutputStream fos=new FileOutputStream()
     }
 
 }
